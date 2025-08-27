@@ -1,27 +1,28 @@
-pipeline{
-    agent{
-        docker{
-            image 'cypress/browser:latest'
+pipeline {
+    agent {
+        docker {
+            image 'cypress/browsers:latest'   
             args '--entrypoint='
         }
-        stages{
-            stage("installation"){
-                steps{
-                    sh 'npm ci'
+    }
 
-                }
-            }
-            stage ("run test"){
-                steps{
-                    sh 'npx cypress run'
-                }
+    stages {
+        stage("installation") {
+            steps {
+                sh 'npm ci'
             }
         }
-        post{
-            always {
-                sh 'toold/generate_html_cucumber_report.sh'
 
+        stage("run test") {
+            steps {
+                sh 'npx cypress run'
             }
+        }
+    }
+
+    post {
+        always {
+            sh 'tools/generate_html_cucumber_report.sh || true'
         }
     }
 }
