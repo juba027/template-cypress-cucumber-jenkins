@@ -1,20 +1,29 @@
-Feature: Login with cridentials
+Feature: Login SauceDemo
 
-  @tc-001 @integration @recette
-  Scenario Outline: Valide cridentials
-    Given je visite le lien "<url>"
+  Background:
+    Given je suis sur la page de login SauceDemo
+
+  @valide
+  Scenario Outline: Connexion valide
     When je saisis le username "<username>"
     And je saisis le password "<password>"
     And je clique sur le bouton Login
-    Then j acced a mon dashboard
+    Then je suis redirigee vers la liste des produits
 
-    @integration
     Examples:
-      | url                            | username       | password           |
-      | http://192.168.1.95:8000/admin | qa_integration | logwire-consulting |
-      # | http://192.168.1.95:8001/admin | qa_recette | efi-academy |
+      | username         | password      |
+      | standard_user    | secret_sauce  |
+      | problem_user     | secret_sauce  |
+      | performance_glitch_user | secret_sauce |
 
-    @recette
+  @invalide
+  Scenario Outline: Connexion invalide
+    When je saisis le username "<username>"
+    And je saisis le password "<password>"
+    And je clique sur le bouton Login
+    Then je vois un message d erreur de login
+
     Examples:
-      | url                            | username   | password    |
-      | http://192.168.1.95:8001/admin | qa_recette | efi-academy |
+      | username        | password     |
+      | locked_out_user | secret_sauce |
+      | standard_user   | bad_pass     |
