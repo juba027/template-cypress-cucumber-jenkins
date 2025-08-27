@@ -1,8 +1,6 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
-// Utilise baseUrl si tu l'as, sinon visite l'URL absolue
 const goToLogin = () => {
-  // Si baseUrl est défini: cy.visit('/')
   cy.visit('https://www.saucedemo.com/');
 };
 
